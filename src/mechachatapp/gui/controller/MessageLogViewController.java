@@ -9,15 +9,14 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.Stack;
 import javafx.event.ActionEvent;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ListView;
-import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
-import javafx.scene.input.KeyCombination.Modifier;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import mechachatapp.be.Message;
@@ -26,7 +25,6 @@ import mechachatapp.gui.commands.ICommand;
 import mechachatapp.gui.commands.IUndoableCommand;
 import mechachatapp.gui.commands.SendTextCommand;
 import mechachatapp.gui.model.MechaChatLogModel;
-import mechachatapp.util.OSUtil;
 
 /**
  *
@@ -50,33 +48,20 @@ public class MessageLogViewController implements Initializable
     
     private KeyCodeCombination undoKeyComp;
     private KeyCodeCombination redoKeyComp;
-    @FXML
-    private MenuItem undoButton;
-    @FXML
-    private MenuItem redoButton;
-    @FXML
-    private MenuItem exitButton;
     
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
-        Modifier cmdOrCtrl = OSUtil.isWindows() ? KeyCombination.CONTROL_DOWN : KeyCombination.META_DOWN;
-        undoKeyComp = new KeyCodeCombination(KeyCode.Z, cmdOrCtrl);
-        redoKeyComp = new KeyCodeCombination(KeyCode.Z, cmdOrCtrl, KeyCombination.SHIFT_DOWN);
-        
-        KeyCodeCombination osxExitKeyComp = new KeyCodeCombination(KeyCode.Q, cmdOrCtrl);
-        KeyCodeCombination windowsExitKeyComp = new KeyCodeCombination(KeyCode.F4, KeyCombination.ALT_DOWN);
-        
-        undoButton.acceleratorProperty().setValue(undoKeyComp);
-        redoButton.acceleratorProperty().setValue(redoKeyComp);
-        
-        exitButton.acceleratorProperty().setValue(OSUtil.isWindows() ? windowsExitKeyComp : osxExitKeyComp);
+        undoKeyComp = new KeyCodeCombination(KeyCode.Z, KeyCombination.META_DOWN);
+        redoKeyComp = new KeyCodeCombination(KeyCode.Z, KeyCombination.META_DOWN, KeyCombination.SHIFT_DOWN);
         
         model = new MechaChatLogModel();
         editingLastMessage = false;
         lstMessages.setItems(model.getMessages());
         
-        root.addEventHandler(KeyEvent.KEY_PRESSED, e -> handleShortcutKeys(e));
+        
+       root.addEventHandler(KeyEvent.KEY_PRESSED, e -> handleShortcutKeys(e));
+       
     }    
 
     @FXML
