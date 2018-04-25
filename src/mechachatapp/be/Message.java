@@ -16,15 +16,14 @@ import javafx.beans.property.StringProperty;
  */
 public class Message
 {
-    private final IntegerProperty id = new SimpleIntegerProperty();
-    private final StringProperty text = new SimpleStringProperty();
-    private final IntegerProperty userId = new SimpleIntegerProperty();
     
-    public Message(int id, String text, int userId)
+    private final StringProperty text = new SimpleStringProperty();
+    private final IntegerProperty id = new SimpleIntegerProperty();
+    
+    public Message(int id, String text)
     {
         this.id.setValue(id);
         this.text.setValue(text);
-        this.userId.setValue(userId);
     }
     
     public int getId()
@@ -50,20 +49,6 @@ public class Message
     public StringProperty textProperty()
     {
         return text;
-    }
-    
-    public int getUserId()
-    {
-        return userId.get();
-    }
-    
-    public IntegerProperty getUserIdProperty() {
-        return userId;
-    }
-    
-    public void setUserId(int value)
-    {
-        userId.set(value);
     }
     
     @Override

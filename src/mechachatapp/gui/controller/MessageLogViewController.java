@@ -11,11 +11,9 @@ import java.util.Stack;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
@@ -23,11 +21,9 @@ import javafx.scene.input.KeyCombination.Modifier;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import mechachatapp.be.Message;
-import mechachatapp.be.User;
 import mechachatapp.gui.commands.ExitCommand;
 import mechachatapp.gui.commands.ICommand;
 import mechachatapp.gui.commands.IUndoableCommand;
-import mechachatapp.gui.commands.ResetMessageLogCommand;
 import mechachatapp.gui.commands.SendTextCommand;
 import mechachatapp.gui.model.MechaChatLogModel;
 import mechachatapp.util.OSUtil;
@@ -49,7 +45,6 @@ public class MessageLogViewController implements Initializable
     
     private Stack<IUndoableCommand> history = new Stack<>();
     private Stack<IUndoableCommand> redoHistory = new Stack<>();
-    
     @FXML
     private BorderPane root;
     
@@ -61,10 +56,6 @@ public class MessageLogViewController implements Initializable
     private MenuItem redoButton;
     @FXML
     private MenuItem exitButton;
-    @FXML
-    private ToggleGroup LogType;
-    @FXML
-    private Label usernameLabel;
     
     @Override
     public void initialize(URL url, ResourceBundle rb)
@@ -81,31 +72,12 @@ public class MessageLogViewController implements Initializable
         
         exitButton.acceleratorProperty().setValue(OSUtil.isWindows() ? windowsExitKeyComp : osxExitKeyComp);
         
+        model = new MechaChatLogModel();
         editingLastMessage = false;
+        lstMessages.setItems(model.getMessages());
         
-        root.addEventFilter(KeyEvent.KEY_PRESSED, e -> handleShortcutKeys(e));
-        
-        //Default model initializer
-        setModel(new MechaChatLogModel());
-    }
-    
-    public void setCurrentUser(User user)
-    {
-        model.setCurrentUser(user);
-    }
-    
-    public User getCurrentUser()
-    {
-        return model.getCurrentUser();
-    }
-    
-    public void setModel(MechaChatLogModel model)
-    {
-        this.model = model;
-        
-        lstMessages.setItems(this.model.getMessages());
-        usernameLabel.setText(getCurrentUser().getUsername());
-    }
+        root.addEventHandler(KeyEvent.KEY_PRESSED, e -> handleShortcutKeys(e));
+    }    
 
     @FXML
     private void handleSendMessage(ActionEvent event)
@@ -224,42 +196,5 @@ public class MessageLogViewController implements Initializable
                 txtMessage.clear();
             }
         }
-    }
-
-    @FXML
-    private void handleReset(ActionEvent event) 
-    {
-        //Create the send text command
-        IUndoableCommand cmd = new ResetMessageLogCommand(model);
-        
-        //Execute the new send message command.
-        cmd.execute();
-        
-        //Add to undo history
-        history.push(cmd);
-        
-        //Clear text field, so the user doesn't have to clear it before typing the next message
-        txtMessage.clear();
-        
-        //CLEAR REDO HISTORY?!?
-        //If we clear here, any new messages will make it impossible to redo.
-        //If we don't, the redo history could potentially be used for storing messages for later redo.
-        redoHistory.clear();
-    }
-
-    @FXML
-    private void handleMultiLog(ActionEvent event) {
-        model.gotoAllMessages();
-    }
-
-    @FXML
-    private void handleSoloLog(ActionEvent event) {
-        model.gotoSoloMessages();
-    }
-
-    @FXML
-    private void handleSignOut(ActionEvent event) 
-    {
-        
     }
 }

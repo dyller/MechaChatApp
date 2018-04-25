@@ -5,36 +5,25 @@
  */
 package mechachatapp.gui.commands;
 
-import mechachatapp.gui.model.MechaChatLogModel;
-
 /**
  *
  * @author mjl
  */
 public class ResetMessageLogCommand implements IUndoableCommand {
 
-    private final MechaChatLogModel model;
-
-    public ResetMessageLogCommand(MechaChatLogModel model) {
-        this.model = model;
-    }
-
     @Override
     public void undo() {
-        //clear log
-        //add all old messages
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public void redo() {
-        execute();
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public void execute() {
-        //save all messages from log
-        //remove all messages from log
-        //add default messages to log
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

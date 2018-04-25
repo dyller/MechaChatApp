@@ -2,7 +2,6 @@ package mechachatapp.bll;
 
 import java.util.List;
 import mechachatapp.be.Message;
-import mechachatapp.be.User;
 
 /**
  *
@@ -10,12 +9,9 @@ import mechachatapp.be.User;
  */
 public interface IMechaChatLogicFacade
 {
-    User login(String username, String passwordSalt);
-    User createUser(String username, String email, String passwordSalt);
-    
-    Message logMessage(String msg, int userId); 
-    boolean removeMessage(Message msg);
-    List<Message> getMessages();
-    List<Message> getMessages(int userId);
+
+    public Message logMessage(String msg); 
+    public boolean removeMessage(Message msg);
+    public List<Message> getMessages();
 
 }

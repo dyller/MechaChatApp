@@ -15,10 +15,8 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import mechachatapp.be.Message;
-import mechachatapp.be.User;
 import mechachatapp.dal.xml.XMLDatabase;
 import mechachatapp.dal.xml.XMLMessage;
-import mechachatapp.dal.xml.XMLUser;
 
 /**
  *
@@ -84,8 +82,8 @@ public class XMLMechaChatDataFacade implements IMechaChatDataFacade {
     }
     
     @Override
-    public Message logMessage(String msg, int userId) {
-        Message m = new Message(db.messages.size(), msg, userId);
+    public Message logMessage(String msg) {
+        Message m = new Message(db.messages.size(), msg);
         XMLMessage xmlmsg = new XMLMessage();
         xmlmsg.setId(m.getId());
         xmlmsg.setText(msg);
@@ -117,47 +115,10 @@ public class XMLMechaChatDataFacade implements IMechaChatDataFacade {
         List<Message> list = new ArrayList<>();
         
         for (XMLMessage message : db.messages) {
-            list.add(new Message(message.getId(), message.getText(), message.getUserId()));
+            list.add(new Message(message.getId(), message.getText()));
         }
         
         return list;
-    }
-
-    @Override
-    public List<Message> getMessages(int userId) {
-        List<Message> list = new ArrayList<>();
-        
-        for (XMLMessage message : db.messages) {
-            //Filter out other users messages.
-            if(message.getUserId() != userId) continue;
-            list.add(new Message(message.getId(), message.getText(), message.getUserId()));
-        }
-        
-        return list;
-    }
-
-    @Override
-    public User login(String username, String passwordSalt) {
-        for (XMLUser user : db.users) {
-            if(user.getUsername().equalsIgnoreCase(username) && user.getPasswordSalt().equals(passwordSalt))
-            {
-                return new User(user.getId(), user.getUsername(), user.getEmail());
-            }
-        }
-        
-        //username or password not correct
-        return null;
-    }
-
-    @Override
-    public User createUser(String username, String email, String passwordSalt) {
-        //TODO: verify the user doesn't already exist
-        
-        XMLUser u = new XMLUser(db.users.size(), username, email, passwordSalt);
-        
-        db.users.add(u);
-        
-        return new User(u.getId(), u.getUsername(), u.getEmail());
     }
     
 }

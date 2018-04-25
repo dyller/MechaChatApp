@@ -8,7 +8,6 @@ package mechachatapp.bll;
 import java.util.ArrayList;
 import java.util.List;
 import mechachatapp.be.Message;
-import mechachatapp.be.User;
 import mechachatapp.dal.IMechaChatDataFacade;
 import mechachatapp.dal.XMLMechaChatDataFacade;
 
@@ -37,13 +36,45 @@ public class MechaChatLogicFacade implements IMechaChatLogicFacade
     private MechaChatLogicFacade()
     {
         //Private constructor, that no one outside can use!
+        
         dal = new XMLMechaChatDataFacade();
+        
+//        dal = new IMechaChatDataFacade()
+//        {
+//            @Override
+//            public Message logMessage(String msg)
+//            {
+//                return new Message(0, msg);
+//            }
+//            
+//            @Override
+//            public boolean removeMessage(Message msg)
+//            {
+//                //Dummy function, doesn't do anything
+//                return true;
+//            }
+//
+//            @Override
+//            public List<Message> getMessages()
+//            {
+//                List<Message> list = new ArrayList<>();
+//                list.add(new Message(0, "This is my Message Log."));
+//                list.add(new Message(1, "There are many others like it, but this one is mine."));
+//                list.add(new Message(2, "My Message Log is my best friend."));
+//                list.add(new Message(3, "It is my life."));
+//                list.add(new Message(4, "I must master it as I must master my life."));
+//                list.add(new Message(5, "Without me, my Message Log is useless."));
+//                list.add(new Message(6, "Without my Message Log, I am useless."));
+//
+//                return list;
+//            }   
+//        };
     }
     
 
     @Override
-    public Message logMessage(String msg, int userId) {
-        return dal.logMessage(msg, userId);
+    public Message logMessage(String msg) {
+        return dal.logMessage(msg);
     }
 
     @Override
@@ -54,21 +85,6 @@ public class MechaChatLogicFacade implements IMechaChatLogicFacade
     @Override
     public boolean removeMessage(Message msg) {
         return dal.removeMessage(msg);
-    }
-
-    @Override
-    public List<Message> getMessages(int userId) {
-        return dal.getMessages(userId);
-    }
-
-    @Override
-    public User login(String username, String passwordSalt) {
-        return dal.login(username, passwordSalt);
-    }
-
-    @Override
-    public User createUser(String username, String email, String passwordSalt) {
-        return dal.createUser(username, email, passwordSalt);
     }
     
 }
