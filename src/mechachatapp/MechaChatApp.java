@@ -12,7 +12,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import mechachatapp.gui.controller.LoginViewController;
 
 /**
  *
@@ -26,14 +25,12 @@ public class MechaChatApp extends Application
     {
         FXMLLoader loginLoader = new FXMLLoader(getClass().getResource("/mechachatapp/gui/view/LoginView.fxml"));
         Parent loginRoot = loginLoader.load();
-        LoginViewController controller = loginLoader.getController();
-        controller.setStage(stage);
         
         Scene loginScene = new Scene(loginRoot);
         
         stage.setScene(loginScene);
         
-        //stage.initStyle(StageStyle.UNDECORATED); //Removing borders means the window cannot be moved, unless dragging is implemented.
+        stage.initStyle(StageStyle.UNDECORATED);
         //stage.setOnCloseRequest(e -> Platform.exit());
         
         stage.show();
