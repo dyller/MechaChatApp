@@ -71,18 +71,18 @@
               <items>
                   <MenuItem mnemonicParsing="false" onAction="#handleSendMessage" text="Send" />
                   <SeparatorMenuItem mnemonicParsing="false" />
-                <MenuItem fx:id="undoButton" mnemonicParsing="false" onAction="#handleUndo" text="Undo">
+                <MenuItem mnemonicParsing="false" onAction="#handleUndo" text="Undo">
                      <accelerator>
                         <KeyCodeCombination alt="UP" code="Z" control="UP" meta="DOWN" shift="UP" shortcut="UP" />
                      </accelerator>
                   </MenuItem>
-                <MenuItem fx:id="redoButton" mnemonicParsing="false" onAction="#handleRedo" text="Redo">
+                <MenuItem mnemonicParsing="false" onAction="#handleRedo" text="Redo">
                      <accelerator>
                         <KeyCodeCombination alt="UP" code="Z" control="UP" meta="DOWN" shift="DOWN" shortcut="UP" />
                      </accelerator>
                   </MenuItem>
                   <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem fx:id="exitButton" mnemonicParsing="false" onAction="#handleExit" text="Exit">
+                  <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit">
                      <accelerator>
                         <KeyCodeCombination alt="UP" code="Q" control="UP" meta="DOWN" shift="UP" shortcut="UP" />
                      </accelerator>
